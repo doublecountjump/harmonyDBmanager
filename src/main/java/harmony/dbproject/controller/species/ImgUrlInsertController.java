@@ -21,7 +21,7 @@ public class ImgUrlInsertController {
 
     private final SpeciesListRepository speciesListRepository;
     private final String apiUrl = "https://customsearch.googleapis.com/customsearch/" +
-            "v1?key=AIzaSyDLDHn8QMVbIUS4SzM4ct9x43pBgXi8mEk&cx=470363312b8c44fa1&searchType=image&q=";
+            "v1?key=key&cx=cx&searchType=image&q=";
 
     public int saveImgUrl() {
         List<SpeciesList> speciesLists = speciesListRepository.findAll();
