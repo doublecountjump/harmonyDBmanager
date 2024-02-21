@@ -26,8 +26,8 @@ public class CountryNameConversionControllerV1 {
     private final CountryRepository countryRepository;
     private final String countryApiUrl = "https://apiv3.iucnredlist.org/api/v3/country/list?token=9bb4facb6d23f48efbf424bb05c0c1ef1cf6f468393bc745d42179ac4aca5fee";
     private final String papagoApiUrl = "https://openapi.naver.com/v1/papago/n2mt";
-    private final String clientId = "파파고id";
-    private final String clientSecret = "파파고pwd";
+    private final String clientId = "EfZI4YwCekWGN8RaPS6U";
+    private final String clientSecret = "bjuvqWYHYC";
     public List<Country> saveCountry(){
         List<Country> countryList = fetchSpeciesFromApi();
 //        for (Country country : countryList) {

@@ -172,7 +172,7 @@ public class SpeciesNameConvertController {
         ArrayList<String> result = new ArrayList<>();
         try{
             String text = URLEncoder.encode(speciesList.getScientific_name(), "UTF-8");
-            String param = "key=우리말샘키&req_type=json&part=word&q=" + text;
+            String param = "key=46D1B0583BE610C7F6218E52D4D70478&req_type=json&part=word&q=" + text;
             String url = apiUrl + "?" + param;
 
             RestTemplate restTemplate = new RestTemplate();
