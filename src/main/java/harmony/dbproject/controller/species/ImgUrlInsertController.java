@@ -36,7 +36,7 @@ public class ImgUrlInsertController {
         List<SpeciesList> speciesLists = speciesListRepository.findAll();
         int count = 0;
         for (SpeciesList speciesList : speciesLists) {
-            if (count == 1) {
+            if (count == 99) {
                 break;
             }
             if (!speciesList.getImg_url().equals("null")) {
