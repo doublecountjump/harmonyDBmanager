@@ -70,5 +70,14 @@ public class ApiSpeciesController {
         return result;
     }
 
+    @CrossOrigin
+    @PostMapping("species")
+    public HashMap<String, List<SpeciesList>> findBySpecies(@RequestBody SpeciesName speciesName){
+        log.info("speciesName: {}", speciesName.getSpeciesName());
+        HashMap<String, List<SpeciesList>> result = new HashMap<>();
+        result.put("result", speciesListRepository.findByScientificName(speciesName.getSpeciesName()));
+        return result;
+    }
+
 
 }
