@@ -1,12 +1,17 @@
 package harmony.dbproject.repository;
 
 import harmony.dbproject.domain.SpeciesList;
+import harmony.dbproject.domain.country.Country;
+import harmony.dbproject.domain.country.CountryList;
+import harmony.dbproject.domain.species.Species;
+import harmony.dbproject.domain.species.SpeciesInfo;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -44,25 +49,45 @@ public class ApiSpeciesListRepository implements SpeciesListRepository{
                 .setParameter("scientificName", scientificName)
                 .getResultList();
     }
+
+    @Override
+    public List<Country> findCountryList(String country) {
+        return em.createQuery("select m " +
+                        "from Country m where lower(m.country) like :country" +
+                        " or lower(m.country_code) like :country" +
+                        " or lower(m.country_korea) like :country", Country.class)
+                .setParameter("country", "%"+country.toLowerCase()+"%")
+                .getResultList();
+    }
     @Override
     public List<SpeciesList> findByCountryAll(String country) {
         return em.createQuery("select m from SpeciesList m where lower(m.country) like :country" +
                         " or lower(m.country_en) like :country" +
-                        " or lower(m.country_korean) like :country" +
-                        " or upper(m.country) like :country" +
-                        " or upper(m.country_en) like :country" +
-                        " or upper(m.country_korean) like :country", SpeciesList.class)
-                .setParameter("country", "%"+country+"%")
+                        " or lower(m.country_korean) like :country", SpeciesList.class)
+                .setParameter("country", "%"+country.toLowerCase()+"%")
                 .getResultList();
     }
     @Override
-    public List<SpeciesList> findBySpeciesNameAll(String speciesName) {
-        return em.createQuery("select m from SpeciesList m where lower(m.scientific_name) like :speciesName" +
-                        " or lower(m.scientific_name_korean) like :speciesName" +
-                        " or upper(m.scientific_name) like :speciesName" +
-                        " or upper(m.scientific_name_korean) like :speciesName", SpeciesList.class)
-                .setParameter("speciesName", "%"+speciesName+"%")
+    public List<SpeciesInfo> findBySpeciesNameAll(String speciesName) {
+        List<Object[]> list = em.createQuery("select distinct m.scientific_name, m.scientific_name_korean, m.img_url " +
+                        "from SpeciesList m " +
+                        "where lower(m.scientific_name) like :speciesName" +
+                        " or lower(m.scientific_name_korean) like :speciesName", Object[].class)
+                .setParameter("speciesName", "%" + speciesName.toLowerCase() + "%")
                 .getResultList();
+
+        List<SpeciesInfo> speciesInfos = new ArrayList<>();
+        for (Object[] item : list) {
+            String scientificName = (String) item[0];
+            String scientificNameKorean = (String) item[1];
+            String img_url = (String) item[2];
+            SpeciesInfo s = new SpeciesInfo();
+            s.setScientific_name(scientificName);
+            s.setScientific_name_korean(scientificNameKorean);
+            s.setImg_url(img_url);
+            speciesInfos.add(s);
+        }
+        return speciesInfos;
     }
 
     @Override
@@ -90,6 +115,4 @@ public class ApiSpeciesListRepository implements SpeciesListRepository{
                 .executeUpdate();
         log.info("update result : {}", i);
     }
-
-
 }

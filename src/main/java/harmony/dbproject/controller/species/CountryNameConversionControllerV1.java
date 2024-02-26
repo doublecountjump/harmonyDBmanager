@@ -3,7 +3,7 @@ package harmony.dbproject.controller.species;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import harmony.dbproject.domain.Country;
+import harmony.dbproject.domain.country.Country;
 import harmony.dbproject.repository.CountryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

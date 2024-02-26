@@ -1,4 +1,4 @@
-package harmony.dbproject.domain;
+package harmony.dbproject.domain.species;
 
 import lombok.Getter;
 import lombok.Setter;

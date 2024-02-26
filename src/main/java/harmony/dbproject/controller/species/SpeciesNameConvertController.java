@@ -2,8 +2,8 @@ package harmony.dbproject.controller.species;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import harmony.dbproject.domain.Country;
-import harmony.dbproject.domain.Species;
+import harmony.dbproject.domain.country.Country;
+import harmony.dbproject.domain.species.Species;
 import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.repository.CountryRepository;
 import harmony.dbproject.repository.SpeciesListRepository;

@@ -1,6 +1,10 @@
 package harmony.dbproject.repository;
 
 import harmony.dbproject.domain.SpeciesList;
+import harmony.dbproject.domain.country.Country;
+import harmony.dbproject.domain.country.CountryList;
+import harmony.dbproject.domain.species.Species;
+import harmony.dbproject.domain.species.SpeciesInfo;
 
 import java.util.List;
 
@@ -11,10 +15,10 @@ public interface SpeciesListRepository {
     List<SpeciesList> findByScientificName(String scientificName);
     List<SpeciesList> findByScientificNameKorean(String scientificNameKorean);
     List<SpeciesList> findByCountryAll(String country);
-    List<SpeciesList> findBySpeciesNameAll(String speciesName);
+    List<SpeciesInfo> findBySpeciesNameAll(String speciesName);
     List<SpeciesList> findByCategory(String category);
     List<SpeciesList> findAll();
-
+    List<Country> findCountryList(String country);
     void Update(String imgUrl,String scientific_name);
 
 

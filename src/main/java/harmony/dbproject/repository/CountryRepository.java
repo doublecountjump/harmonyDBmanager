@@ -1,6 +1,6 @@
 package harmony.dbproject.repository;
 
-import harmony.dbproject.domain.Country;
+import harmony.dbproject.domain.country.Country;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

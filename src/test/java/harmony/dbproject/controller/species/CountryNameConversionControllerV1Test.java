@@ -1,14 +1,12 @@
 package harmony.dbproject.controller.species;
 
-import harmony.dbproject.domain.Country;
+import harmony.dbproject.domain.country.Country;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CountryNameConversionControllerV1Test {

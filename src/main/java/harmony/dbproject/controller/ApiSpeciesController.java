@@ -2,10 +2,13 @@ package harmony.dbproject.controller;
 
 
 
-import harmony.dbproject.domain.CountryName;
+import harmony.dbproject.domain.country.Country;
+import harmony.dbproject.domain.country.CountryList;
+import harmony.dbproject.domain.country.CountryName;
 import harmony.dbproject.domain.SpeciesList;
-import harmony.dbproject.domain.SpeciesName;
-import harmony.dbproject.repository.ApiSpeciesListRepository;
+import harmony.dbproject.domain.species.Species;
+import harmony.dbproject.domain.species.SpeciesInfo;
+import harmony.dbproject.domain.species.SpeciesName;
 import harmony.dbproject.repository.SpeciesListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,14 +44,28 @@ public class ApiSpeciesController {
         return result;
     }
 
+    @CrossOrigin
+    @PostMapping("/country")
+    public HashMap<String, List<Country>> findByCountry(@RequestBody CountryName countryName){
+        log.info("countryName: {}", countryName.getCountryName());
+
+        HashMap<String,List<Country>> result = new HashMap<>();
+        result.put("result",speciesListRepository.findCountryList(countryName.getCountryName()));
+        for (List<Country> value : result.values()) {
+            for (Country countryList : value) {
+                log.info("speciesList: {}", countryList.getCountry_korea());
+            }
+        }
+        return result;
+    }
+
 
 
     @CrossOrigin
     @PostMapping("/speciesnameall")
-    public HashMap<String, List<SpeciesList>> findBySpeciesNameAll(@RequestBody SpeciesName speciesName) {
+    public HashMap<String, List<SpeciesInfo>> findBySpeciesNameAll(@RequestBody SpeciesName speciesName) {
         log.info("speciesName: {}", speciesName.getSpeciesName());
-
-        HashMap<String, List<SpeciesList>> result = new HashMap<>();
+        HashMap<String, List<SpeciesInfo>> result = new HashMap<>();
         result.put("result", speciesListRepository.findBySpeciesNameAll(speciesName.getSpeciesName()));
         return result;
     }
