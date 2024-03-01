@@ -71,7 +71,6 @@ public class ApiSpeciesListRepositoryV2 implements SpeciesListRepositoryV2{
 
             List<SpeciesInfo> speciesInfos = new ArrayList<>();
             transformObjectToSpeciesInfo(objects, speciesInfos);
-            System.out.println(speciesInfos.size());
             return speciesInfos;
         }
     }
