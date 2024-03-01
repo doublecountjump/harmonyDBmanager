@@ -67,7 +67,6 @@ public class ApiSpeciesListRepositoryV2 implements SpeciesListRepositoryV2{
                             " (lower(m.scientific_name) like :speciesName or lower(m.scientific_name_korean) like :speciesName)", Object[].class)
                     .setParameter("speciesName", "%" + speciesJSON.getSpeciesName().toLowerCase() + "%")
                     .setParameter("type", speciesJSON.getMode())
-                    .setMaxResults(10)
                     .getResultList();
 
             List<SpeciesInfo> speciesInfos = new ArrayList<>();
