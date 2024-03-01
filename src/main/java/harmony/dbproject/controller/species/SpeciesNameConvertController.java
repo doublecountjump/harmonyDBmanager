@@ -52,11 +52,11 @@ public class SpeciesNameConvertController {
                 break;
             }
 
-            String countryCode = country.getCountry_code();        //국가 이름을 가져옴
+            String countryCode = country.getCountry();        //국가 이름을 가져옴
             String replaceApiList = redListApiUrl.replace("{country}", countryCode);     //국가 이름을 넣어서 API URL을 만듬
             List<Species> result = getSpeciesList(replaceApiList);      //API를 통해 해당 국가의 종들을 가져옴
 
-            log.info("result = {} ,size = {}, country = {}", result.size(),size, country.getCountry_code());
+            log.info("result = {} ,size = {}, country = {}", result.size(),size, country.getCountry());
 
             for (Species species : result) {
                 // 멸종위기 등급이 LC, NE, DD 인 경우는 제외
@@ -67,7 +67,7 @@ public class SpeciesNameConvertController {
 
                 if(resultcount >49990){
                     log.warn("종의 개수가 50000개에 근접했습니다.");
-                    log.warn("현재 진행중인 나라 = {}", country.getCountry_code());
+                    log.warn("현재 진행중인 나라 = {}", country.getCountry());
                     log.warn("현재 진행중인 동물 이름 = {}", species.getScientific_name());
                     break;
                 }
@@ -100,7 +100,7 @@ public class SpeciesNameConvertController {
 
     private int findIndex(List<Country> list, String ch) {
         for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getCountry_code().equals(ch)){
+            if(list.get(i).getCountry().equals(ch)){
                 return i;
             }
         }
@@ -124,9 +124,9 @@ public class SpeciesNameConvertController {
      * @param speciesList
      */
     private void setCountryInfo(Country country, SpeciesList speciesList) {
-        speciesList.setCountry(country.getCountry_code());
+        speciesList.setCountry(country.getCountry());
         speciesList.setCountry_en(country.getCountry());
-        speciesList.setCountry_korean(country.getCountry_korea());
+        speciesList.setCountry_korean(country.getCountry_korean());
     }
 
     /**

@@ -11,7 +11,8 @@ import lombok.Setter;
 @Entity
 public class Country {
     @Id
-    private String country_code;
     private String country;
-    private String country_korea;
+    private String country_en;
+    private String country_korean;
+    private String flag_img;
 }

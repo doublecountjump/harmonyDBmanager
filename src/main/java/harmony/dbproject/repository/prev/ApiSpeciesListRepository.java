@@ -1,10 +1,11 @@
-package harmony.dbproject.repository;
+package harmony.dbproject.repository.prev;
 
 import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.domain.country.Country;
 import harmony.dbproject.domain.country.CountryList;
 import harmony.dbproject.domain.species.Species;
 import harmony.dbproject.domain.species.SpeciesInfo;
+import harmony.dbproject.repository.SpeciesListRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import java.util.List;
 @Repository
 @Slf4j
 @Transactional
-public class ApiSpeciesListRepository implements SpeciesListRepository{
+public class ApiSpeciesListRepository implements SpeciesListRepository {
     private final EntityManager em;
 
     @Override
@@ -54,8 +55,8 @@ public class ApiSpeciesListRepository implements SpeciesListRepository{
     public List<Country> findCountryList(String country) {
         return em.createQuery("select m " +
                         "from Country m where lower(m.country) like :country" +
-                        " or lower(m.country_code) like :country" +
-                        " or lower(m.country_korea) like :country", Country.class)
+                        " or lower(m.country_en) like :country" +
+                        " or lower(m.country_korean) like :country", Country.class)
                 .setParameter("country", "%"+country.toLowerCase()+"%")
                 .getResultList();
     }
@@ -112,6 +113,22 @@ public class ApiSpeciesListRepository implements SpeciesListRepository{
         int i = em.createQuery("update SpeciesList m set m.img_url = :imgUrl where m.scientific_name = :scientific_name")
                 .setParameter("imgUrl", imgUrl)
                 .setParameter("scientific_name", scientific_name)
+                .executeUpdate();
+        log.info("update result : {}", i);
+    }
+
+
+
+
+
+    public List<Country> findAllCountry() {
+        return em.createQuery("select m from Country m", Country.class).getResultList();
+    }
+
+    public void UpdateCountry(String flag_img, String country){
+        int i = em.createQuery("update Country m set m.flag_img = :flag_img where m.country = :country")
+                .setParameter("flag_img", flag_img)
+                .setParameter("country", country)
                 .executeUpdate();
         log.info("update result : {}", i);
     }

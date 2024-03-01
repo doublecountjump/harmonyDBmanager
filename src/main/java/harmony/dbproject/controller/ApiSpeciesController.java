@@ -19,7 +19,7 @@ import java.util.List;
 
 
 
-@RestController
+
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/api/species")
@@ -30,7 +30,7 @@ public class ApiSpeciesController {
 
 
     @CrossOrigin
-    @PostMapping("/countryall")
+    @PostMapping("/country")
     public HashMap<String, List<SpeciesList>> findByCountryAll(@RequestBody CountryName countryName){
         log.info("countryName: {}", countryName.getCountryName());
 
@@ -45,7 +45,7 @@ public class ApiSpeciesController {
     }
 
     @CrossOrigin
-    @PostMapping("/country")
+    @PostMapping("/countryall")
     public HashMap<String, List<Country>> findByCountry(@RequestBody CountryName countryName){
         log.info("countryName: {}", countryName.getCountryName());
 
@@ -53,7 +53,7 @@ public class ApiSpeciesController {
         result.put("result",speciesListRepository.findCountryList(countryName.getCountryName()));
         for (List<Country> value : result.values()) {
             for (Country countryList : value) {
-                log.info("speciesList: {}", countryList.getCountry_korea());
+                log.info("speciesList: {}", countryList.getCountry_korean());
             }
         }
         return result;
@@ -71,7 +71,7 @@ public class ApiSpeciesController {
     }
 
     @CrossOrigin
-    @PostMapping("species")
+    @PostMapping("/speciesname")
     public HashMap<String, List<SpeciesList>> findBySpecies(@RequestBody SpeciesName speciesName){
         log.info("speciesName: {}", speciesName.getSpeciesName());
         HashMap<String, List<SpeciesList>> result = new HashMap<>();

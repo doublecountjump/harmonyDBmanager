@@ -64,9 +64,9 @@ public class CountryNameConversionControllerV1 {
                     String countryName = itemNode.get("country").asText();
                     String countryNameKor = translate(countryName);
 
-                    country.setCountry_code(countryCode);
-                    country.setCountry(countryName);
-                    country.setCountry_korea(countryNameKor);
+                    country.setCountry(countryCode);
+                    country.setCountry_en(countryName);
+                    country.setCountry_korean(countryNameKor);
                     resultList.add(country);
                 }
 
