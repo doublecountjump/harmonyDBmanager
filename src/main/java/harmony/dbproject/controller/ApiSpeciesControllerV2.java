@@ -149,6 +149,15 @@ public class ApiSpeciesControllerV2 {
         return result;
     }
 
+    /**
+     * 20240306 추가
+     * 랭킹기능 테스트용
+     * 최대 10개까지의 종을 검색 순위별로 반환
+     * @return
+     * 리턴값이 String 배열로, 각 (종이름, 검색횟수)로 반환됨
+     * Ex) [Golila Golila Golila, 100], [Tiger, 99], ...
+     * 리턴값을 바꾸거나, 학명이 아닌 한글로 나오기 원한다면 의견 제시 바람
+     */
     @GetMapping("/test")
     public List<String> test(){
         return rankingListRepository.findSpeciesRankingList();
