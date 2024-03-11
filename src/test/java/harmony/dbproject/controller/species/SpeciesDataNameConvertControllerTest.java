@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-class SpeciesNameConvertControllerTest {
+class SpeciesDataNameConvertControllerTest {
 
     @Autowired
     private SpeciesNameConvertController speciesNameConvertController;

@@ -4,7 +4,7 @@ package harmony.dbproject.controller.species;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import harmony.dbproject.domain.SpeciesList;
-import harmony.dbproject.repository.SpeciesListRepository;
+import harmony.dbproject.repository.prev.SpeciesListRepository;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;

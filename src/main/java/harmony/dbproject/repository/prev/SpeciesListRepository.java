@@ -1,9 +1,7 @@
-package harmony.dbproject.repository;
+package harmony.dbproject.repository.prev;
 
 import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.domain.country.Country;
-import harmony.dbproject.domain.country.CountryList;
-import harmony.dbproject.domain.species.Species;
 import harmony.dbproject.domain.species.SpeciesInfo;
 
 import java.util.List;

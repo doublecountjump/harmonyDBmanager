@@ -3,10 +3,10 @@ package harmony.dbproject.controller.species;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import harmony.dbproject.domain.country.Country;
-import harmony.dbproject.domain.species.Species;
+import harmony.dbproject.domain.species.SpeciesData;
 import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.repository.CountryRepository;
-import harmony.dbproject.repository.SpeciesListRepository;
+import harmony.dbproject.repository.prev.SpeciesListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,13 +54,13 @@ public class SpeciesNameConvertController {
 
             String countryCode = country.getCountry();        //국가 이름을 가져옴
             String replaceApiList = redListApiUrl.replace("{country}", countryCode);     //국가 이름을 넣어서 API URL을 만듬
-            List<Species> result = getSpeciesList(replaceApiList);      //API를 통해 해당 국가의 종들을 가져옴
+            List<SpeciesData> result = getSpeciesList(replaceApiList);      //API를 통해 해당 국가의 종들을 가져옴
 
             log.info("result = {} ,size = {}, country = {}", result.size(),size, country.getCountry());
 
-            for (Species species : result) {
+            for (SpeciesData speciesData : result) {
                 // 멸종위기 등급이 LC, NE, DD 인 경우는 제외
-                String cat = species.getCategory();
+                String cat = speciesData.getCategory();
                 if(cat.equals("LC") || cat.equals("NE") || cat.equals("DD")) {
                     continue;
                 }
@@ -68,7 +68,7 @@ public class SpeciesNameConvertController {
                 if(resultcount >49990){
                     log.warn("종의 개수가 50000개에 근접했습니다.");
                     log.warn("현재 진행중인 나라 = {}", country.getCountry());
-                    log.warn("현재 진행중인 동물 이름 = {}", species.getScientific_name());
+                    log.warn("현재 진행중인 동물 이름 = {}", speciesData.getScientific_name());
                     break;
                 }
 
@@ -79,7 +79,7 @@ public class SpeciesNameConvertController {
 
                 SpeciesList speciesList = new SpeciesList();
                 setCountryInfo(country, speciesList);     //나라 정보 저장
-                setSpeciesInfo(species, speciesList);     //종 정보 저장
+                setSpeciesInfo(speciesData, speciesList);     //종 정보 저장
                 addSpeciesInfo(speciesList);              //세부 정보 저장(API 활용)
                 resultcount++;                            //API 쿼리 횟수 카운트
                 log.info("resultcount = {}", resultcount);
@@ -109,13 +109,13 @@ public class SpeciesNameConvertController {
 
     /**
      * 카테고리(멸종위기 등급)과 학명을 speciesList 에 저장
-     * @param species
+     * @param speciesData
      * @param speciesList
      */
-    private void setSpeciesInfo(Species species, SpeciesList speciesList) {
+    private void setSpeciesInfo(SpeciesData speciesData, SpeciesList speciesList) {
 
-        speciesList.setCategory(species.getCategory());
-        speciesList.setScientific_name(species.getScientific_name());
+        speciesList.setCategory(speciesData.getCategory());
+        speciesList.setScientific_name(speciesData.getScientific_name());
     }
 
     /**
@@ -134,7 +134,7 @@ public class SpeciesNameConvertController {
      * @param replaceApiList
      * @return
      */
-    private List<Species> getSpeciesList(String replaceApiList) {
+    private List<SpeciesData> getSpeciesList(String replaceApiList) {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<String> response = restTemplate.getForEntity(replaceApiList, String.class);
@@ -146,14 +146,14 @@ public class SpeciesNameConvertController {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(responseBody);
 
-                List<Species> resultList = new ArrayList<>();
+                List<SpeciesData> resultList = new ArrayList<>();
 
                 // JSON 배열 "result" 파싱
                 for (JsonNode itemNode : jsonNode.get("result")) {
-                    Species species = new Species();
-                    species.setCategory(itemNode.get("category").asText());
-                    species.setScientific_name(itemNode.get("scientific_name").asText());
-                    resultList.add(species);
+                    SpeciesData speciesData = new SpeciesData();
+                    speciesData.setCategory(itemNode.get("category").asText());
+                    speciesData.setScientific_name(itemNode.get("scientific_name").asText());
+                    resultList.add(speciesData);
                 }
                 return resultList;
             } catch (IOException e) {

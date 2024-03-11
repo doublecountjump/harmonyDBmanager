@@ -2,10 +2,7 @@ package harmony.dbproject.repository.prev;
 
 import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.domain.country.Country;
-import harmony.dbproject.domain.country.CountryList;
-import harmony.dbproject.domain.species.Species;
 import harmony.dbproject.domain.species.SpeciesInfo;
-import harmony.dbproject.repository.SpeciesListRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
