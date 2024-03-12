@@ -25,8 +25,15 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
 
     private final EntityManager em;
     private final RankingListRepository rankingListRepository;
+
+    /**
+     * /country
+     * @param countryJSON
+     * @return
+     */
     @Override
     public Optional<List<Country>> findCountryList(CountryJSON countryJSON) {
+        log.info("findCountryList : {}", countryJSON.getCountryName());
         List<Country> country = em.createQuery("select m " +
                         "from Country m where lower(m.country) like :country" +
                         " or lower(m.country_en) like :country" +
@@ -36,21 +43,25 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
         return Optional.ofNullable(country);
     }
 
+    /**
+     * /country/list
+     * @param countryJSON
+     * @return
+     */
     @Override
     public List<Habitat> findSpeciesListByCountry(CountryJSON countryJSON) {
+        log.info("findSpeciesListByCountry : {}", countryJSON.getCountryName());
         if(countryJSON.getMode().equals("전체")) {
-             return em.createQuery("SELECT h.id, h.country, c.country_en, c.country_korean, c.flag_img, " +
-                            "h.scientific_name, s.scientific_name_korean, s.def, s.category, s.img_url, s.speciestype\n" +
-                            "FROM Habitat h\n" +
-                            "JOIN h.countryInfo c\n" +
-                            "JOIN h.speciesInfo s\n" +
+             return em.createQuery("SELECT h " +
+                            "FROM Habitat h " +
+                            "JOIN h.countryInfo c " +
+                            "JOIN h.speciesInfo s " +
                              "where h.country = :country", Habitat.class)
                     .setParameter("country", countryJSON.getCountryName())
                     .getResultList();
         }
         else{
-            return em.createQuery("SELECT h.id, h.country, c.country_en, c.country_korean, c.flag_img, " +
-                            "h.scientific_name, s.scientific_name_korean, s.def, s.category, s.img_url, s.speciestype\n" +
+            return em.createQuery("SELECT h " +
                             "FROM Habitat h\n" +
                             "JOIN h.countryInfo c\n" +
                             "JOIN h.speciesInfo s\n" +
@@ -62,6 +73,11 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
         }
     }
 
+    /**
+     * /species
+     * @param speciesJSON
+     * @return
+     */
     @Override
     public Optional<List<SpeciesInfo>> findSpeciesList(SpeciesJSON speciesJSON) {
         if(speciesJSON.getMode().equals("전체")) {
@@ -110,19 +126,31 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
         }
     }
 
+    /**
+     * /species/list
+     * @param scientificName
+     * @return
+     */
     @Override
     public List<Habitat> findSpeciesListBySpeciesName(String scientificName) {
-        rankingListRepository.saveSpeciesRank(scientificName);
-        return em.createQuery("SELECT h.id, h.country, c.country_en, c.country_korean, c.flag_img, " +
-                        "h.scientific_name, s.scientific_name_korean, s.def, s.category, s.img_url, s.speciestype\n" +
+        log.info("findSpeciesListBySpeciesName : {}", scientificName);
+        List<Habitat> result = em.createQuery("SELECT h\n" +
                         "FROM Habitat h\n" +
                         "JOIN h.countryInfo c\n" +
                         "JOIN h.speciesInfo s\n" +
                         "where h.scientific_name = :scientific_name", Habitat.class)
                 .setParameter("scientific_name", scientificName)
                 .getResultList();
+        scientificName = result.get(0).getSpeciesInfo().getScientific_name_korean();
+        rankingListRepository.saveSpeciesRank(scientificName);
+        return result;
     }
 
+    /**
+     * /species/country
+     * @param scientificName
+     * @return
+     */
     @Override
     public List<Country> findCountryListBySpeciesName(String scientificName) {
         return em.createQuery("select distinct c.country, c.country_en, c.country_korean, c.flag_img " +
