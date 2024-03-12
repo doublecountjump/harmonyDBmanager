@@ -10,6 +10,7 @@ import harmony.dbproject.domain.species.SpeciesName;
 import harmony.dbproject.repository.RankingListRepository;
 import harmony.dbproject.repository.SpeciesListRepositoryV2;
 import harmony.dbproject.repository.SpeciesListRepositoryV3;
+import harmony.dbproject.service.SpeciesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +24,7 @@ import java.util.List;
 @RequestMapping("/api/v3")
 public class ApiSpeciesControllerV3 {
 
-    private final SpeciesListRepositoryV3 speciesListRepository;
-    private final RankingListRepository rankingListRepository;
+    private final SpeciesService speciesService;
 
     /**
      * 나라 다중검색
@@ -37,17 +37,8 @@ public class ApiSpeciesControllerV3 {
         log.info("/country 로 데이터 전달. 전달된 데이터: {}, {}", countryJSON.getCountryName(), countryJSON.getMode());
 
         HashMap<String,List<Country>> result = new HashMap<>();
-        List<Country> countries = speciesListRepository.findCountryList(countryJSON).orElse(null);
+        List<Country> countries = speciesService.findCountryList(countryJSON);
         result.put("result",countries);
-        if(countries != null){
-            String name = result.values()
-                    .stream().toList().get(0)
-                    .get(0).getCountry_korean();
-            log.info("/country 에서 데이터 반환. 반환된 데이터: {} 포함 {}개의 데이터 반환", name, result.values().stream().toList().get(0).size());
-        }
-       else{
-           log.warn("/country 에서 데이터 반환. 반환된 데이터: null");
-        }
         return result;
     }
 
@@ -62,12 +53,8 @@ public class ApiSpeciesControllerV3 {
         log.info("/country/list 로 데이터 전달. 전달된 데이터: {}, {}", countryJSON.getCountryName(), countryJSON.getMode());
 
         HashMap<String,List<Habitat>> result = new HashMap<>();
-        result.put("result",speciesListRepository.findSpeciesListByCountry(countryJSON));
+        result.put("result",speciesService.findSpeciesListByCountry(countryJSON));
 
-        String name = result.values()
-                .stream().toList().get(0)
-                .get(0).getSpeciesInfo().getScientific_name_korean();
-        log.info("/country/list 에서 데이터 반환. 반환된 데이터: {} 포함 {}개의 데이터 반환", name, result.values().stream().toList().get(0).size());
         return result;
     }
 
@@ -82,17 +69,9 @@ public class ApiSpeciesControllerV3 {
         log.info("/species 로 데이터 전달. 전달된 데이터: {}, {}", speciesJSON.getSpeciesName(), speciesJSON.getMode());
 
         HashMap<String, List<SpeciesInfo>> result = new HashMap<>();
-        List<SpeciesInfo> speciesInfos = speciesListRepository.findSpeciesList(speciesJSON).orElse(null);
+        List<SpeciesInfo> speciesInfos = speciesService.findSpeciesList(speciesJSON);
         result.put("result", speciesInfos);
-        if(speciesInfos != null){
-            String name = result.values()
-                    .stream().toList().get(0)
-                    .get(0).getScientific_name_korean();
-            log.info("/species 에서 데이터 반환. 반환된 데이터: {} 포함 {}개의 데이터 반환", name, result.values().stream().toList().get(0).size());
-        }
-        else{
-            log.warn("/species 에서 데이터 반환. 반환된 데이터: null");
-        }
+
         return result;
     }
 
@@ -107,12 +86,8 @@ public class ApiSpeciesControllerV3 {
         log.info("/species/list 로 데이터 전달. 전달된 데이터: {}", speciesName.getSpeciesName());
 
         HashMap<String, List<Habitat>> result = new HashMap<>();
-        result.put("result", speciesListRepository.findSpeciesListBySpeciesName(speciesName.getSpeciesName()));
+        result.put("result", speciesService.findSpeciesListBySpeciesName(speciesName));
 
-        String name = result.values()
-                .stream().toList().get(0)
-                .get(0).getSpeciesInfo().getScientific_name_korean();
-        log.info("/species/list 에서 데이터 반환. 반환된 데이터: {}", name);
         return result;
     }
 
@@ -128,12 +103,8 @@ public class ApiSpeciesControllerV3 {
         log.info("/species/country 로 데이터 전달. 전달된 데이터: {}", speciesName.getSpeciesName());
 
         HashMap<String, List<Country>> result = new HashMap<>();
-        result.put("result", speciesListRepository.findCountryListBySpeciesName(speciesName.getSpeciesName()));
+        result.put("result", speciesService.findCountryListBySpeciesName(speciesName));
 
-        String name = result.values()
-                .stream().toList().get(0)
-                .get(0).getCountry_korean();
-        log.info("/species/country 에서 데이터 반환. 반환된 데이터: {} 포함 {}개의 데이터 반환", name, result.values().stream().toList().get(0).size());
         return result;
     }
 
@@ -148,6 +119,7 @@ public class ApiSpeciesControllerV3 {
      */
     @GetMapping("/test")
     public List<String> test(){
-        return rankingListRepository.findSpeciesRankingList();
+        return speciesService.findSpeciesRankingList();
     }
+
 }

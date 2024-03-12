@@ -29,11 +29,10 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
     /**
      * /country
      * @param countryJSON
-     * @return
+     * @return Optional(나라 목록)
      */
     @Override
     public Optional<List<Country>> findCountryList(CountryJSON countryJSON) {
-        log.info("findCountryList : {}", countryJSON.getCountryName());
         List<Country> country = em.createQuery("select m " +
                         "from Country m where lower(m.country) like :country" +
                         " or lower(m.country_en) like :country" +
@@ -46,11 +45,10 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
     /**
      * /country/list
      * @param countryJSON
-     * @return
+     * @return List(나라에 존재하는 종 목록)
      */
     @Override
     public List<Habitat> findSpeciesListByCountry(CountryJSON countryJSON) {
-        log.info("findSpeciesListByCountry : {}", countryJSON.getCountryName());
         if(countryJSON.getMode().equals("전체")) {
              return em.createQuery("SELECT h " +
                             "FROM Habitat h " +
@@ -76,7 +74,7 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
     /**
      * /species
      * @param speciesJSON
-     * @return
+     * @return Optional(종 목록)
      */
     @Override
     public Optional<List<SpeciesInfo>> findSpeciesList(SpeciesJSON speciesJSON) {
@@ -129,11 +127,10 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
     /**
      * /species/list
      * @param scientificName
-     * @return
+     * @return List(종에 대한 정보)
      */
     @Override
     public List<Habitat> findSpeciesListBySpeciesName(String scientificName) {
-        log.info("findSpeciesListBySpeciesName : {}", scientificName);
         List<Habitat> result = em.createQuery("SELECT h\n" +
                         "FROM Habitat h\n" +
                         "JOIN h.countryInfo c\n" +
@@ -141,15 +138,13 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
                         "where h.scientific_name = :scientific_name", Habitat.class)
                 .setParameter("scientific_name", scientificName)
                 .getResultList();
-        scientificName = result.get(0).getSpeciesInfo().getScientific_name_korean();
-        rankingListRepository.saveSpeciesRank(scientificName);
         return result;
     }
 
     /**
      * /species/country
      * @param scientificName
-     * @return
+     * @return List(종이 존재하는 나라에 대한 정보)
      */
     @Override
     public List<Country> findCountryListBySpeciesName(String scientificName) {

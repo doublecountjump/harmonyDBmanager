@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import harmony.dbproject.domain.country.Country;
 import harmony.dbproject.domain.species.SpeciesData;
 import harmony.dbproject.domain.SpeciesList;
-import harmony.dbproject.repository.CountryRepository;
+import harmony.dbproject.repository.prev.CountryRepository;
 import harmony.dbproject.repository.prev.SpeciesListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
