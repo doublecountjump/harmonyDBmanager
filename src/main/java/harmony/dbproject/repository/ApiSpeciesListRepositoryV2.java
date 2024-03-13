@@ -21,6 +21,7 @@ import java.util.List;
 public class ApiSpeciesListRepositoryV2 implements SpeciesListRepositoryV2{
 
     private final EntityManager em;
+    private final RankingListRepository rankingListRepository;
     @Override
     public List<Country> findCountryList(CountryJSON countryJSON) {
         return em.createQuery("select m " +
@@ -90,6 +91,7 @@ public class ApiSpeciesListRepositoryV2 implements SpeciesListRepositoryV2{
 
     @Override
     public List<SpeciesList> findSpeciesListBySpeciesName(String scientificName) {
+        rankingListRepository.saveSpeciesRank(scientificName);
         return em.createQuery("select m from SpeciesList m where m.scientific_name = :scientificName", SpeciesList.class)
                 .setParameter("scientificName", scientificName)
                 .getResultList();

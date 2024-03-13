@@ -7,6 +7,7 @@ import harmony.dbproject.domain.country.CountryName;
 import harmony.dbproject.domain.species.SpeciesInfo;
 import harmony.dbproject.domain.species.SpeciesJSON;
 import harmony.dbproject.domain.species.SpeciesName;
+import harmony.dbproject.repository.RankingListRepository;
 import harmony.dbproject.repository.SpeciesListRepositoryV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +46,7 @@ import java.util.stream.Collectors;
 public class ApiSpeciesControllerV2 {
 
     private final SpeciesListRepositoryV2 speciesListRepository;
+    private final RankingListRepository rankingListRepository;
 
     /**
      * 나라 다중검색
@@ -146,4 +149,17 @@ public class ApiSpeciesControllerV2 {
         return result;
     }
 
+    /**
+     * 20240306 추가
+     * 랭킹기능 테스트용
+     * 최대 10개까지의 종을 검색 순위별로 반환
+     * @return
+     * 리턴값이 String 배열로, 각 (종이름, 검색횟수)로 반환됨
+     * Ex) [Golila Golila Golila, 100], [Tiger, 99], ...
+     * 리턴값을 바꾸거나, 학명이 아닌 한글로 나오기 원한다면 의견 제시 바람
+     */
+    @GetMapping("/test")
+    public List<String> test(){
+        return rankingListRepository.findSpeciesRankingList();
+    }
 }

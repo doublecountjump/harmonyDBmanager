@@ -3,13 +3,11 @@ package harmony.dbproject.controller;
 
 
 import harmony.dbproject.domain.country.Country;
-import harmony.dbproject.domain.country.CountryList;
 import harmony.dbproject.domain.country.CountryName;
 import harmony.dbproject.domain.SpeciesList;
-import harmony.dbproject.domain.species.Species;
 import harmony.dbproject.domain.species.SpeciesInfo;
 import harmony.dbproject.domain.species.SpeciesName;
-import harmony.dbproject.repository.SpeciesListRepository;
+import harmony.dbproject.repository.prev.SpeciesListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

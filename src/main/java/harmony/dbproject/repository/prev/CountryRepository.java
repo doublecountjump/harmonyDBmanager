@@ -1,4 +1,4 @@
-package harmony.dbproject.repository;
+package harmony.dbproject.repository.prev;
 
 import harmony.dbproject.domain.country.Country;
 import jakarta.persistence.EntityManager;
