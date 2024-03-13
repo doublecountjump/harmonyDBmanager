@@ -86,9 +86,7 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
                     .setParameter("speciesName", "%" + speciesJSON.getSpeciesName().toLowerCase() + "%")
                     .getResultList();
 
-            List<SpeciesInfo> speciesInfos = new ArrayList<>();
-            transformObjectToSpeciesInfo(objects, speciesInfos);
-            return Optional.ofNullable(speciesInfos);
+            return transformObjectToSpeciesInfo(objects);
         }
         else {
             List<Object[]> objects = em.createQuery("select distinct m.scientific_name, m.scientific_name_korean, m.img_url " +
@@ -99,14 +97,15 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
                     .setParameter("type", speciesJSON.getMode())
                     .getResultList();
 
-            List<SpeciesInfo> speciesInfos = new ArrayList<>();
-            transformObjectToSpeciesInfo(objects, speciesInfos);
-            return Optional.ofNullable(speciesInfos);
+            return transformObjectToSpeciesInfo(objects);
         }
     }
 
-    private void transformObjectToSpeciesInfo(List<Object[]> objects, List<SpeciesInfo> speciesInfos) {
-
+    private Optional<List<SpeciesInfo>> transformObjectToSpeciesInfo(List<Object[]> objects) {
+        List<SpeciesInfo> speciesInfos = new ArrayList<>();
+        if(objects.isEmpty()){
+            return Optional.empty();
+        }
         try{
             for (Object[] item : objects) {
                 String scientificName = (String) item[0];
@@ -122,6 +121,8 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
             e.printStackTrace();
             speciesInfos.add(null);
         }
+        return Optional.of(speciesInfos);
+
     }
 
     /**
