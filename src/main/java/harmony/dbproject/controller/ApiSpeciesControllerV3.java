@@ -126,6 +126,7 @@ public class ApiSpeciesControllerV3 {
      * Ex) [Golila Golila Golila, 100], [Tiger, 99], ...
      * 리턴값을 바꾸거나, 학명이 아닌 한글로 나오기 원한다면 의견 제시 바람
      */
+    @CrossOrigin
     @GetMapping("/test")
     public List<String> test(){
         return speciesService.findSpeciesRankingList();
