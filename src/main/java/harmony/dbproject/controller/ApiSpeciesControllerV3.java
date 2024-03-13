@@ -22,7 +22,6 @@ import java.util.List;
  *  20240313 추가
  *  * 시작 URL이 /api/v3 로 변경
  *  * Service 계층에서 반환된 데이터를 HashMap으로 감싸서 반환
- *  * JSON 반환값이 바뀜
  *  *     -/species/list
  *  *     -/country/list
  *  * 랭킹 반환값의 동물이름이 한글로 변경
@@ -58,10 +57,10 @@ public class ApiSpeciesControllerV3 {
      */
     @CrossOrigin
     @PostMapping("/country/list")
-    public HashMap<String, List<Habitat>> findSpeciesByCountry(@RequestBody CountryJSON countryJSON){
+    public HashMap<String, List<SpeciesList>> findSpeciesByCountry(@RequestBody CountryJSON countryJSON){
         log.info("/country/list 로 데이터 전달. 전달된 데이터: {}, {}", countryJSON.getCountryName(), countryJSON.getMode());
 
-        HashMap<String,List<Habitat>> result = new HashMap<>();
+        HashMap<String,List<SpeciesList>> result = new HashMap<>();
         result.put("result",speciesService.findSpeciesListByCountry(countryJSON));
 
         return result;
@@ -91,10 +90,10 @@ public class ApiSpeciesControllerV3 {
      */
     @CrossOrigin
     @PostMapping("/species/list")
-    public HashMap<String, List<Habitat>> findBySpecies(@RequestBody SpeciesName speciesName){
+    public HashMap<String, List<SpeciesList>> findBySpecies(@RequestBody SpeciesName speciesName){
         log.info("/species/list 로 데이터 전달. 전달된 데이터: {}", speciesName.getSpeciesName());
 
-        HashMap<String, List<Habitat>> result = new HashMap<>();
+        HashMap<String, List<SpeciesList>> result = new HashMap<>();
         result.put("result", speciesService.findSpeciesListBySpeciesName(speciesName));
 
         return result;
