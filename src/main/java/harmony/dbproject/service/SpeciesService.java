@@ -1,5 +1,6 @@
 package harmony.dbproject.service;
 
+import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.domain.country.Country;
 import harmony.dbproject.domain.country.CountryJSON;
 import harmony.dbproject.domain.habitat.Habitat;
@@ -13,8 +14,8 @@ import java.util.Optional;
 public interface SpeciesService {
     List<String> findSpeciesRankingList();
     List<Country> findCountryList(CountryJSON countryJSON);
-    List<Habitat> findSpeciesListByCountry(CountryJSON countryJSON);
+    List<SpeciesList> findSpeciesListByCountry(CountryJSON countryJSON);
     List<SpeciesInfo> findSpeciesList(SpeciesJSON speciesJSON);
-    List<Habitat> findSpeciesListBySpeciesName(SpeciesName speciesName);
+    List<SpeciesList> findSpeciesListBySpeciesName(SpeciesName speciesName);
     List<Country> findCountryListBySpeciesName(SpeciesName speciesName);
 }

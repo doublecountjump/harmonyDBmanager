@@ -39,7 +39,10 @@ public class ApiSpeciesListRepositoryV3 implements SpeciesListRepositoryV3{
                         " or lower(m.country_korean) like :country", Country.class)
                 .setParameter("country", "%" + countryJSON.getCountryName().toLowerCase() + "%")
                 .getResultList();
-        return Optional.ofNullable(country);
+        if(country.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(country);
     }
 
     /**

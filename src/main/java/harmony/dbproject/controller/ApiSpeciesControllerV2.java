@@ -3,20 +3,17 @@ package harmony.dbproject.controller;
 import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.domain.country.Country;
 import harmony.dbproject.domain.country.CountryJSON;
-import harmony.dbproject.domain.country.CountryName;
 import harmony.dbproject.domain.species.SpeciesInfo;
 import harmony.dbproject.domain.species.SpeciesJSON;
 import harmony.dbproject.domain.species.SpeciesName;
 import harmony.dbproject.repository.RankingListRepository;
-import harmony.dbproject.repository.SpeciesListRepositoryV2;
+import harmony.dbproject.repository.prev.SpeciesListRepositoryV2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * !기존과의 변경점!

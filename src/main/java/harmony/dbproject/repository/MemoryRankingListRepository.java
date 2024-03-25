@@ -1,6 +1,7 @@
 package harmony.dbproject.repository;
 
 import harmony.dbproject.domain.species.SpeciesInfo;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.*;
 public class MemoryRankingListRepository implements RankingListRepository{
     Map<String, Long> speciesRankingList = new HashMap<>();
     @Override
-    public void saveSpeciesRank(String speciesName) {
+    public synchronized void saveSpeciesRank(String speciesName) {
         for (String s : speciesRankingList.keySet()) {
             if(s.equals(speciesName)){
                 speciesRankingList.put(speciesName, speciesRankingList.get(s)+1);
@@ -21,7 +22,7 @@ public class MemoryRankingListRepository implements RankingListRepository{
         }
 
         speciesRankingList.put(speciesName, 1L);
-        log.info("new Info: {}", speciesName);
+        log.info("new Info: {}", speciesRankingList.size());
     }
 
     @Override
@@ -35,7 +36,7 @@ public class MemoryRankingListRepository implements RankingListRepository{
             }
             String tmp = s + "," + speciesRankingList.get(s).toString();
             result.add(tmp);
-            log.info("speciesName: {} Count: {}", s, speciesRankingList.get(s));
+            log.info("speciesName: {} Count: {}2", s, speciesRankingList.get(s));
         }
 
         return result;

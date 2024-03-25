@@ -1,5 +1,6 @@
 package harmony.dbproject.service;
 
+import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.domain.country.Country;
 import harmony.dbproject.domain.country.CountryJSON;
 import harmony.dbproject.domain.habitat.Habitat;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -43,12 +45,33 @@ public class ApiSpeciesService implements SpeciesService{
     }
 
     @Override
-    public List<Habitat> findSpeciesListByCountry(CountryJSON countryJSON) {
-        List<Habitat> result = speciesListRepository.findSpeciesListByCountry(countryJSON);
+    public List<SpeciesList> findSpeciesListByCountry(CountryJSON countryJSON) {
+        List<Habitat> list = speciesListRepository.findSpeciesListByCountry(countryJSON);
 
-        String name = result.get(0).getSpeciesInfo().getScientific_name_korean();
+        List<SpeciesList> result = getSpeciesList(list);
+
+        String name = result.get(0).getScientific_name_korean();
         log.info("/country/list 에서 데이터 반환. 반환된 데이터: {} 포함 {}개의 데이터 반환", name, result.size());
 
+        return result;
+    }
+
+    private List<SpeciesList> getSpeciesList(List<Habitat> list) {
+        List<SpeciesList> result = new ArrayList<>();
+        for(Habitat habitat : list){
+            SpeciesList speciesList = new SpeciesList();
+            speciesList.setTaxonid(habitat.getId());
+            speciesList.setCountry(habitat.getCountryInfo().getCountry());
+            speciesList.setCountry_en(habitat.getCountryInfo().getCountry_en());
+            speciesList.setCountry_korean(habitat.getCountryInfo().getCountry_korean());
+            speciesList.setScientific_name(habitat.getSpeciesInfo().getScientific_name());
+            speciesList.setScientific_name_korean(habitat.getSpeciesInfo().getScientific_name_korean());
+            speciesList.setDefinition(habitat.getSpeciesInfo().getDef());
+            speciesList.setCategory(habitat.getSpeciesInfo().getCategory());
+            speciesList.setImg_url(habitat.getSpeciesInfo().getImg_url());
+            speciesList.setType(habitat.getSpeciesInfo().getSpeciestype());
+            result.add(speciesList);
+        }
         return result;
     }
 
@@ -66,13 +89,15 @@ public class ApiSpeciesService implements SpeciesService{
     }
 
     @Override
-    public List<Habitat> findSpeciesListBySpeciesName(SpeciesName speciesName) {
-        List<Habitat> result = speciesListRepository.findSpeciesListBySpeciesName(speciesName.getSpeciesName());
+    public List<SpeciesList> findSpeciesListBySpeciesName(SpeciesName speciesName) {
+        List<Habitat> list = speciesListRepository.findSpeciesListBySpeciesName(speciesName.getSpeciesName());
 
-        String name = result.get(0).getSpeciesInfo().getScientific_name_korean();
+        List<SpeciesList> result = getSpeciesList(list);
+
+        String name = result.get(0).getScientific_name_korean();
         log.info("/species/list 에서 데이터 반환. 반환된 데이터: {}", name);
 
-        rankingListRepository.saveSpeciesRank(result.get(0).getSpeciesInfo().getScientific_name_korean());
+        rankingListRepository.saveSpeciesRank(result.get(0).getScientific_name_korean());
 
         return result;
     }
