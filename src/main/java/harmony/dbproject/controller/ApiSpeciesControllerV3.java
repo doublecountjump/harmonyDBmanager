@@ -8,7 +8,6 @@ import harmony.dbproject.domain.species.SpeciesInfo;
 import harmony.dbproject.domain.species.SpeciesJSON;
 import harmony.dbproject.domain.species.SpeciesName;
 import harmony.dbproject.repository.RankingListRepository;
-import harmony.dbproject.repository.SpeciesListRepositoryV2;
 import harmony.dbproject.repository.SpeciesListRepositoryV3;
 import harmony.dbproject.service.SpeciesService;
 import lombok.RequiredArgsConstructor;

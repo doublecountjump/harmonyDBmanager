@@ -1,10 +1,11 @@
-package harmony.dbproject.repository;
+package harmony.dbproject.repository.prev;
 
 import harmony.dbproject.domain.SpeciesList;
 import harmony.dbproject.domain.country.Country;
 import harmony.dbproject.domain.country.CountryJSON;
 import harmony.dbproject.domain.species.SpeciesInfo;
 import harmony.dbproject.domain.species.SpeciesJSON;
+import harmony.dbproject.repository.RankingListRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
