@@ -32,7 +32,7 @@ public class CountryNameConversionControllerV1 {
     private String clientId;
 
     @Value("${papago_apipwd}")
-    private String clientSecret = "파파고pwd";
+    private String clientSecret;
     public List<Country> saveCountry(){
         List<Country> countryList = fetchSpeciesFromApi();
 //        for (Country country : countryList) {
