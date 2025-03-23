@@ -1,0 +1,43 @@
+type Query{
+    getHabitatByCountry(country : String) : [Habitat]
+    getHabitatByName(scientific_name : String) : [Habitat]
+}
+
+
+type Species{
+    scientific_name : ID
+    scientific_name_korean : String
+    def : String
+    category : String
+    img_url : String
+    speciestype : String
+}
+
+type Habitat{
+    id : ID
+    country : String
+    scientific_name : String
+    countryInfo : Country
+    speciesInfo : Species
+}
+
+type Country{
+    country : ID
+    country_en : String
+    country_korean : String
+    flag_img : String
+}
+
+type SpeciesList{
+    taxonid: ID
+    country:String
+    country_korean:String
+    country_en:String
+    scientific_name:String
+    scientific_name_korean:String
+    definition:String
+    category:String
+    img_url:String
+    type:String
+}
+

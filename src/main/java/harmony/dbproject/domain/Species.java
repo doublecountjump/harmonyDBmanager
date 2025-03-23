@@ -1,9 +1,8 @@
-package harmony.dbproject.domain.species;
+package harmony.dbproject.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jdk.jfr.Enabled;
 import lombok.Getter;
 import lombok.Setter;
 

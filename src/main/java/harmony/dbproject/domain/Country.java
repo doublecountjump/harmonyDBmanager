@@ -1,4 +1,4 @@
-package harmony.dbproject.domain.country;
+package harmony.dbproject.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

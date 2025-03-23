@@ -1,7 +1,5 @@
-package harmony.dbproject.domain.habitat;
+package harmony.dbproject.domain;
 
-import harmony.dbproject.domain.country.Country;
-import harmony.dbproject.domain.species.Species;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +19,10 @@ public class Habitat {
     private String scientific_name;
 
     @ManyToOne
-    @JoinColumn(name = "country", referencedColumnName = "country", insertable = false, updatable = false)
+    @JoinColumn(name = "country", insertable = false, updatable = false)
     private Country countryInfo;
 
     @ManyToOne
-    @JoinColumn(name = "scientific_name", referencedColumnName = "scientific_name", insertable = false, updatable = false)
+    @JoinColumn(name = "scientific_name", insertable = false, updatable = false)
     private Species speciesInfo;
 }
