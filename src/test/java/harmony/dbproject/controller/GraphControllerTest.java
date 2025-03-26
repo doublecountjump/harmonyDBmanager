@@ -4,7 +4,6 @@ import harmony.dbproject.domain.Habitat;
 import harmony.dbproject.repository.HabitatRepository;
 import harmony.dbproject.service.HarmonyService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
@@ -12,8 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.graphql.test.tester.GraphQlTester;
 
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @GraphQlTest(GraphController.class)
@@ -40,7 +37,7 @@ class GraphControllerTest {
         list.add(habitat2);
         list.add(habitat);
 
-        Mockito.when(repository.findHabitatByCountry("CN")).thenReturn(Optional.of(list));
+        Mockito.when(repository.findHabitatByCountryInfoCountry("CN")).thenReturn(Optional.of(list));
 
         List<Habitat> habitats = this.tester.documentName("test")
                 .variable("name", "CN")

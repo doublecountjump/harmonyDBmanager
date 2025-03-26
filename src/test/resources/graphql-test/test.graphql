@@ -2,5 +2,13 @@ query test($name : String){
     getHabitatByCountry(country: $name){
         country
         scientific_name
+        countryInfo {
+            country
+            country_korean
+        }
+        speciesInfo {
+            scientific_name
+            scientific_name_korean
+        }
     }
 }

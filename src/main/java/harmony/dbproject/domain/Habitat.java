@@ -15,14 +15,11 @@ import lombok.Setter;
 public class Habitat {
     @Id
     private Long id;
-    private String country;
-    private String scientific_name;
-
-    @ManyToOne
-    @JoinColumn(name = "country", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country",insertable = false, updatable = false)
     private Country countryInfo;
 
-    @ManyToOne
-    @JoinColumn(name = "scientific_name", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "scientific_name",insertable = false, updatable = false)
     private Species speciesInfo;
 }
