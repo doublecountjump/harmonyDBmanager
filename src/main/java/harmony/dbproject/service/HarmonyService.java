@@ -2,9 +2,7 @@ package harmony.dbproject.service;
 
 
 import harmony.dbproject.domain.Habitat;
-import harmony.dbproject.repository.CountryRepository;
 import harmony.dbproject.repository.HabitatRepository;
-import harmony.dbproject.repository.SpeciesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +16,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Transactional
 public class HarmonyService {
-    private final CountryRepository countryRepository;
     private final HabitatRepository habitatRepository;
-    private final SpeciesRepository speciesRepository;
+
 
     public List<Habitat> getHabitatByCountry(String name) {
         System.out.println("service start");
@@ -52,4 +49,7 @@ public class HarmonyService {
         else throw new EntityNotFoundException();
     }
 
+    public List<Habitat> getHabitat() {
+        return habitatRepository.findAll();
+    }
 }

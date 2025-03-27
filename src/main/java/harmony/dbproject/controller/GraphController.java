@@ -28,6 +28,16 @@ public class GraphController {
         return service.getHabitatByCountry(country);
     }
 
+    @QueryMapping
+    public List<Habitat> getHabitatByName(@Argument String name){
+        return service.getHabitatByName(name);
+    }
+
+    @QueryMapping
+    public List<Habitat> getHabitat(){
+        return service.getHabitat();
+    }
+
     @BatchMapping
     public Map<Habitat, Country> countryInfo(List<Habitat> habitats){
         Set<Long> collect = habitats.stream().map(Habitat::getId).collect(Collectors.toSet());
@@ -63,12 +73,4 @@ public class GraphController {
 
         return result;
     }
-
-
-    @QueryMapping
-    public List<Habitat> getHabitatByName(@Argument String name){
-        return service.getHabitatByName(name);
-    }
-
-
 }

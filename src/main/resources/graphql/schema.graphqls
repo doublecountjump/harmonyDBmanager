@@ -1,7 +1,7 @@
     type Query{
         getHabitatByCountry(country : String) : [Habitat]
         getHabitatByName(scientific_name : String) : [Habitat]
-        getHabitat(id : ID) : [Habitat]
+        getHabitat : [Habitat]
     }
 
 
