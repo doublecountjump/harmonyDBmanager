@@ -14,12 +14,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Habitat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country",insertable = false, updatable = false)
+    @JoinColumn(name = "country")
     private Country countryInfo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scientific_name",insertable = false, updatable = false)
+    @JoinColumn(name = "scientific_name")
     private Species speciesInfo;
 }

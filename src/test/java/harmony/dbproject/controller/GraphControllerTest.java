@@ -25,6 +25,7 @@ class GraphControllerTest {
     private HarmonyService harmonyService;  // 이 부분을 추가
 
 
+/*
     @Test
     void test(){
         List<Habitat> list = new ArrayList<>();
@@ -51,6 +52,14 @@ class GraphControllerTest {
             System.out.println(habitat1.getScientific_name());
         }
 
+    }
+*/
+
+    @Test
+    void test2(){
+        UUID uuid = UUID.randomUUID();
+
+        System.out.println(uuid.toString());
     }
 
 }

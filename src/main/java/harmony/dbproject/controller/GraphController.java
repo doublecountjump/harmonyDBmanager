@@ -4,6 +4,7 @@ package harmony.dbproject.controller;
 import harmony.dbproject.domain.Country;
 import harmony.dbproject.domain.Habitat;
 import harmony.dbproject.domain.Species;
+import harmony.dbproject.domain.SpeciesInput;
 import harmony.dbproject.repository.HabitatRepository;
 import harmony.dbproject.service.HarmonyService;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.web.OffsetScrollPositionHandlerMethodArgumentResolver;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.BatchMapping;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -36,6 +38,11 @@ public class GraphController {
     @QueryMapping
     public List<Habitat> getHabitat(){
         return service.getHabitat();
+    }
+
+    @MutationMapping
+    public Habitat insertSpecies(@Argument String country, @Argument SpeciesInput species){
+       return service.insertSpecies(country, species);
     }
 
     @BatchMapping
