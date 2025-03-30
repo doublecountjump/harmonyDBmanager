@@ -22,6 +22,6 @@ public class Token {
 
     public Token(UUID uuid){
         this.key = uuid.toString();
-        this.expiredDate = LocalDateTime.now().plusMinutes(1);
+        this.expiredDate = LocalDateTime.now().plusMinutes(9);
     }
 }

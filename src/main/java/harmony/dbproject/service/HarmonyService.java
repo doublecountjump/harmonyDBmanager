@@ -27,11 +27,11 @@ public class HarmonyService {
 
 
     public List<Habitat> getHabitatByCountry(String name) {
-        return habitatRepository.findHabitatByCountryInfoCountry(name).orElseThrow(() -> new EntityNotFoundException("not fopunt"));
+        return habitatRepository.findHabitatByCountryInfoCountry(name).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 나라입니다."));
     }
 
     public List<Habitat> getHabitatByName(String name){
-        return habitatRepository.findHabitatByScientific_name(name).orElseThrow(() -> new EntityNotFoundException("not"));
+        return habitatRepository.findHabitatByScientific_name(name).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 종입니다."));
     }
 
     public List<Object[]> findCountryWithHabitatIdById(Set<Long> collect) {
@@ -40,7 +40,7 @@ public class HarmonyService {
             return result.get();
         }
 
-        else throw new EntityNotFoundException();
+        else throw new EntityNotFoundException("존재하지 않는 나라입니다.");
     }
 
     public List<Object[]> findSpeciesWithHabitatIdById(Set<Long> collect) {
@@ -49,7 +49,7 @@ public class HarmonyService {
             return result.get();
         }
 
-        else throw new EntityNotFoundException();
+        else throw new EntityNotFoundException("존재하지 않는 종입니다.");
     }
 
     public List<Habitat> getHabitat() {
@@ -57,7 +57,7 @@ public class HarmonyService {
     }
 
     public Habitat insertSpecies(String country, SpeciesInput speciesInput) {
-        Country c = countryRepository.findById(country).orElseThrow(() -> new EntityNotFoundException());
+        Country c = countryRepository.findById(country).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 나라입니다."));
         Species save = speciesRepository.save(new Species(speciesInput));
 
         Habitat habitat = new Habitat();
