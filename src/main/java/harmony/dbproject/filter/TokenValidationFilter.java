@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.View;
 import java.io.IOException;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 //api키가 존재하는지 확인하는 필터
 public class TokenValidationFilter extends OncePerRequestFilter {
@@ -37,11 +39,13 @@ public class TokenValidationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request,response);
             }
             else{
+                log.warn("유효하지 않은 key 접근");
                 ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.TOKEN_IS_NOT_VALID);
                 sendErrorResponse(response,errorResponse, HttpServletResponse.SC_UNAUTHORIZED);
             }
 
         }else{
+            log.warn("존재하지 않는 key 접근");
             ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.TOKEN_NOT_FOUND);
             sendErrorResponse(response, errorResponse, HttpServletResponse.SC_UNAUTHORIZED);
         }
