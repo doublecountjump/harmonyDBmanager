@@ -1,4 +1,4 @@
-# 🌿 Harmony - 생물종 정보 관리 시스템
+  # 🌿 Harmony - 생물종 정보 관리 시스템
 
 생물종과 서식지 정보를 효율적으로 관리하고 GraphQL API를 통해 제공하는 백엔드 시스템입니다.
 
@@ -23,19 +23,10 @@ Harmony는 다양한 생물종과 그들의 서식지, 국가 정보를 관리�
 - **캐싱**: Caffeine, Spring Cache
 - **유틸리티**: Lombok, Stream API
 
-## 📊 아키텍처
+## 📊 DB아키텍처
 
-### API 레이어
-- GraphQL API (`/graphql` 엔드포인트)
-- REST API (토큰 발급 및 관리)
+![image](https://github.com/user-attachments/assets/b3b9ace7-b39d-4967-93e1-9173dcf46e8d)
 
-### 서비스 레이어
-- 트랜잭션 관리
-- 비즈니스 로직 처리
-
-### 데이터 레이어
-- JPA 기반 리포지토리
-- 엔티티 관계 맵핑
 
 ## 🔍 주요 구현 사항
 
@@ -96,50 +87,3 @@ public Token findToken(String key) {
 - **해결**: Caffeine 로컬 메모리 캐시 적용
 - **결과**: API 키 조회 응답 시간 85% 감소, 데이터베이스 부하 대폭 감소
 
-## 📝 API 문서
-
-### GraphQL API
-
-#### 쿼리
-- `getHabitatByCountry(country: String)`: 국가명으로 서식지 조회
-- `getHabitatByName(name: String)`: 종 이름으로 서식지 조회
-- `getHabitat()`: 모든 서식지 조회
-
-#### 뮤테이션
-- `insertSpecies(country: String, species: SpeciesInput)`: 새로운 종 정보 추가
-
-### REST API
-
-#### 토큰 발급
-- `POST /api/issue`: 새로운 API 키 발급
-
-## 🔒 인증 시스템
-
-UUID 기반 토큰을 사용하여 API 접근을 제어합니다. 토큰은 발급 후 일정 기간 동안 유효하며, 캐싱 시스템을 통해 효율적으로 관리됩니다.
-
-## 📈 확장성
-
-- Spring Cache 추상화 레이어를 활용하여 필요 시 Redis 등의 분산 캐시로 손쉽게 전환 가능
-- 마이크로서비스 아키텍처로의 확장 용이
-
-## 📦 설치 및 실행
-
-```bash
-# 프로젝트 클론
-git clone https://github.com/yourusername/harmony.git
-cd harmony
-
-# 빌드
-./gradlew build
-
-# 실행
-java -jar build/libs/harmony-0.0.1-SNAPSHOT.jar
-```
-
-## 🤝 기여하기
-
-프로젝트에 기여하고 싶으신가요? 이슈를 등록하거나 풀 리퀘스트를 보내주세요!
-
-## 📄 라이센스
-
-MIT 라이센스에 따라 배포됩니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 참조하세요.
