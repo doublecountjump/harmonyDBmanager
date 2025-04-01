@@ -1,0 +1,44 @@
+    type Query{
+        getHabitatByCountry(country : String) : [Habitat]
+        getHabitatByName(scientific_name : String) : [Habitat]
+        getHabitat : [Habitat]
+    }
+
+    type Mutation{
+        insertSpecies(country : ID!, species : SpeciesInput!) : Habitat
+    }
+
+
+    type Species{
+        scientific_name : ID
+        scientific_name_korean : String
+        def : String
+        category : String
+        img_url : String
+        speciestype : String
+    }
+
+    type Habitat{
+        id : ID
+        countryInfo : Country
+        speciesInfo : Species
+    }
+
+    type Country{
+        country : ID
+        country_en : String
+        country_korean : String
+        flag_img : String
+    }
+
+
+    input SpeciesInput{
+        scientific_name : ID!
+        scientific_name_korean : String
+        def : String
+        category : String
+        img_url : String
+        speciestype : String!
+    }
+
+

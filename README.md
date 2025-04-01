@@ -1,21 +1,62 @@
-# 졸업작품 생물의 다양성
-### 한라대학교 컴퓨터공학과 황성준
+  # 🌿 Harmony - 생물종 정보 관리 시스템
 
-생물의 다양성을 주제로 three.js 와 java spring, mysql을 사용해 프로젝트를 진행
+생물종과 서식지 정보를 효율적으로 관리하고 GraphQL API를 통해 제공하는 백엔드 시스템입니다.
 
-위 코드들은 그 중 java spring 부분 백엔드 파트 코드임
+## 📋 프로젝트 소개
+
+Harmony는 다양한 생물종과 그들의 서식지, 국가 정보를 관리하는 백엔드 시스템입니다. GraphQL API를 통해 데이터를 유연하게 쿼리할 수 있으며, API 키 기반 인증 시스템을 갖추고 있습니다.
+
+## ✨ 주요 기능
+
+- 국가별 서식지 및 생물종 정보 조회
+- 종 이름 기반 서식지 정보 조회
+- 생물종 데이터 추가
+- API 키 발급 및 인증
+
+## 🛠️ 기술 스택
+
+### 백엔드
+- **언어**: Java
+- **프레임워크**: Spring Boot, Spring MVC
+- **API**: GraphQL (Spring GraphQL)
+- **데이터베이스 접근**: JPA, Spring Data JPA
+- **캐싱**: Caffeine, Spring Cache
+- **유틸리티**: Lombok, Stream API
+
+## 📊 DB아키텍처
+
+![image](https://github.com/user-attachments/assets/b3b9ace7-b39d-4967-93e1-9173dcf46e8d)
 
 
-![image](https://github.com/doublecountjump/harmonyDBmanager/assets/122294767/92e2e155-8892-4ece-861d-cbd59fbb1de7)
+## 🔍 주요 구현 사항
 
-대략적인 구조는 다음과 같다.
-주로 프론트엔드쪽 요청을 받아서 데이터를 찾아서 전달해주는 역할을 진행함
+### API 사용을 위한 토큰 발급
+API 키가 포함된 토큰을 발급받기 위해 '/api/issue' 엔드포인트에 먼저 접속합니다. 발급받은 토큰의 key를 api_key 라는 이름의 헤더에 넣어 요청을 보내야 합니다.
+```json
+{
+    "id": 11,
+    "key": "19297a30-3a7d-422e-8a79-e13e5f9124a9",
+    "expiredDate": "2025-03-31T17:58:49.0909698"
+}
+```
 
-프로젝트에 구체적인 단계가 정해지지 않았을 때는 h2 데이터베이스를 이용하여 DB의 구조를 만듬
+### GraphQL을 활용한 단일 엔드포인트 API
+모든 데이터 쿼리 및 뮤테이션을 단일 `/graphql` 엔드포인트를 통해 처리합니다. 클라이언트는 필요한 데이터만 정확히 요청할 수 있어 오버페칭/언더페칭 문제를 해결합니다.
 
-DB 데이터는 Redlist api를 이용하여 멸종위기종에 대한 데이터들을 받아 온 후 
-
-파파고api, 우리말샘api, 구글 custom search API 를 사용함 
-
-각각 국가 이름번역, 학명 번역, 동물 사진 크롤링 에 사용됨.
+```graphql
+# 예시 쿼리
+query {
+  getHabitatByCountry(country: "Korea") {
+    id
+    countryInfo {
+      country
+      continent
+    }
+    speciesInfo {
+      scientific_name
+      common_name
+    }
+  }
+}
+```
 
